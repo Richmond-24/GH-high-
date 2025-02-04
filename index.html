@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior High Schools GH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Styling for mobile menu (static with overflow) */
+        #mobileMenu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            height: 100%;
+            width: 250px; /* Adjust width as needed */
+            background-color: #ef4444; /* Tailwind red */
+            transition: left 0.3s ease-in-out;
+            z-index: 50;
+            overflow-y: auto;
+            padding-top: 20px;
+        }
+
+        #mobileMenu.open {
+            left: 0; /* Makes the menu appear when toggled */
+        }
+
+        /* Full-screen overlay for mobile menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+        }
+
+        /* Shift the hero image down when menu is open */
+        #hero {
+            transition: transform 0.3s ease-in-out;
+        }
+        #hero.shift {
+            transform: translateX(250px); /* Adjust with the width of the menu */
+        }
+
+        /* Hide the overlay when the menu is closed */
+        .overlay.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Header -->
+    <header class="bg-red-600 text-white py-4 shadow-lg fixed w-full top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="#home" class="flex items-center space-x-2">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 9v-6a2 2 0 012-2h4a2 2 0 012 2v6m-6 0h6" />
+                </svg>
+                <h1 class="text-xl font-bold">High Schools GH</h1>
+            </a>
+
+            <!-- Desktop Navbar -->
+            <nav id="menu" class="hidden md:flex space-x-6">
+                <a href="#home" class="hover:underline font-bold">Home</a>
+                <a href="#categories" class="hover:underline font-bold">Categories</a>
+                <a href="#about" class="hover:underline font-bold">Ranking</a>
+                <a href="#articles" class="hover:underline font-bold">Articles</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+                <button id="menuToggle" class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobileMenu" class="bg-red-600 text-white absolute top-0 left-0 w-64 h-full px-4 py-4 space-y-4 z-50">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold">Menu</h2>
+            <button id="closeMenu" class="text-white focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <a href="#home" class="block text-lg font-bold hover:underline" onclick="closeMenuOnLinkClick()">Home</a>
+        <a href="#categories" class="block text-lg font-bold hover:underline" onclick="closeMenuOnLinkClick()">Categories</a>
+        <a href="#about" class="block text-lg font-bold hover:underline" onclick="closeMenuOnLinkClick()">Ranking</a>
+        <a href="#articles" class="block text-lg font-bold hover:underline" onclick="closeMenuOnLinkClick()">Articles</a>
+    </div>
+
+    <!-- Overlay for menu -->
+    <div id="overlay" class="overlay hidden"></div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenu = document.getElementById('closeMenu');
+        const overlay = document.getElementById('overlay');
+        const hero = document.getElementById('hero');
+
+        // Toggle mobile menu visibility
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            overlay.classList.remove('hidden');
+            hero.classList.add('shift'); // Move the hero section when menu is open
+        });
+
+        // Close mobile menu
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            overlay.classList.add('hidden');
+            hero.classList.remove('shift'); // Reset the hero section position
+        });
+
+        // Close menu when clicking on overlay
+        overlay.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            overlay.classList.add('hidden');
+            hero.classList.remove('shift'); // Reset the hero section position
+        });
+
+        // Close menu when any link is clicked
+        function closeMenuOnLinkClick() {
+            mobileMenu.classList.remove('open');
+            overlay.classList.add('hidden');
+            hero.classList.remove('shift'); // Reset the hero section position
+        }
+    </script>
+
+     <!-- Hero Section -->
+  <section id="hero" class="relative bg-cover bg-center h-screen" style="background-image: url('ghana-education-statistics.webp');">
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-6xl font-extrabold text-white">Welcome to High School HUB-Ghana</h2>
+    
+      </div>
+    </div>
+  </section>
+
+    
+</section>
+
+    <!-- Schools Section -->
+    <section id="schools" class="py-12">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-bold text-center mb-8">Categories of Senior High Schools in Ghana</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <div class="bg-yellow-500 shadow-md rounded overflow-hidden">
+                    <img src="sddefault.jpg" alt="School Name" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">Public High Schools</h3>
+                        <a href="from.html" class="font-bold text-blue-600 mt-4 inline-block hover:underline">View Details</a>
+                    </div>
+                </div>
+                <div class="bg-yellow-500 shadow-md rounded overflow-hidden">
+                    <img src="maxresdefault (1).jpg" alt="School Name" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">Private High Schools</h3>
+                        <a href="Private.html" class="font-bold text-blue-600 mt-4 inline-block hover:underline">View Details</a>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-500 shadow-md rounded overflow-hidden">
+                    <img src="maxresdefault.jpg" alt="School Name" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">Catholic High Schools</h3>
+                        <a href="Private.html" class="text-blue-600 font-bold mt-4 inline-block hover:underline">View Details</a>
+                    </div>
+                </div>
+                <div class="bg-yellow-500 shadow-md rounded overflow-hidden">
+                    <img src="Students-on-automobile-under-TVET-.webp" alt="School Name" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">Technical/Vocational schools </h3>
+                        <a href="from.html" class="text-blue-600 font-bold mt-4 inline-block hover:underline">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+
+ 
+    <!-- Initialize AOS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 10, // Animation duration in milliseconds
+        });
+    </script>
+</body>
+</html>
